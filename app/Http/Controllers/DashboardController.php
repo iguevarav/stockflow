@@ -12,29 +12,57 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $totalProductos = Producto::count();
-        $totalCategorias = Categoria::count();
-        $productosStockBajo = Producto::whereRaw('stock_actual <= stock_minimo')->count();
-        $valorInventario = Producto::sum(DB::raw('stock_actual * precio_venta'));
-        
-       $productosStockBajoLista = Producto::with('categoria')
-            ->whereRaw('stock_actual <= stock_minimo')
-            ->orderBy('stock_actual', 'asc')
-            ->limit(10)
-            ->get();
-        
-        $ultimosMovimientos = MovimientoInventario::with('producto')
-            ->orderBy('created_at', 'desc')
-            ->limit(10)
-            ->get();
-        
-        return view('dashboard', compact(
-            'totalProductos',
-            'totalCategorias', 
-            'productosStockBajo',
-            'valorInventario',
-            'productosStockBajoLista',
-            'ultimosMovimientos'
-        ));
+        try {
+            // Datos para las estadísticas
+            $totalProductos = Producto::count();
+            $totalCategorias = Categoria::count();
+            $stockBajo = Producto::whereColumn('stock_actual', '<=', 'stock_minimo')->count();
+            
+            // Calcular valor del inventario
+            $valorInventario = Producto::sum(DB::raw('stock_actual * precio_venta'));
+            
+            // Productos con stock bajo (colección, no conteo)
+            $productosStockBajo = Producto::with('categoria')
+                ->whereColumn('stock_actual', '<=', 'stock_minimo')
+                ->orderBy('stock_actual', 'asc')
+                ->take(5)
+                ->get();
+            
+            // Últimos movimientos
+            $ultimosMovimientos = collect(); // Colección vacía por defecto
+            
+            // Solo buscar movimientos si la tabla existe
+            if (class_exists('\App\Models\MovimientoInventario')) {
+                try {
+                    $ultimosMovimientos = MovimientoInventario::with('producto')
+                        ->latest()
+                        ->take(5)
+                        ->get();
+                } catch (\Exception $e) {
+                    // Si hay error con movimientos, usar colección vacía
+                    $ultimosMovimientos = collect();
+                }
+            }
+
+            return view('dashboard', compact(
+                'totalProductos',
+                'totalCategorias', 
+                'stockBajo',
+                'valorInventario',
+                'productosStockBajo',
+                'ultimosMovimientos'
+            ));
+            
+        } catch (\Exception $e) {
+            // En caso de error, usar valores por defecto
+            return view('dashboard', [
+                'totalProductos' => 0,
+                'totalCategorias' => 0,
+                'stockBajo' => 0,
+                'valorInventario' => 0,
+                'productosStockBajo' => collect(),
+                'ultimosMovimientos' => collect()
+            ]);
+        }
     }
 }

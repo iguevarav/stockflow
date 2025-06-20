@@ -60,18 +60,22 @@
                 <h3><i class="fas fa-exclamation-triangle"></i> Productos con Stock Bajo</h3>
             </div>
             <div class="panel-content">
-                @if(isset($productosStockBajo) && count($productosStockBajo) > 0)
+                @if(isset($productosStockBajo) && $productosStockBajo->count() > 0)
                     @foreach($productosStockBajo as $producto)
                     <div class="stock-item">
                         <div class="stock-product-info">
-                            <h5>{{ $producto->nombre ?? 'Sensor de Temperatura PT100' }}</h5>
-                            <span class="category-badge">{{ $producto->categoria->nombre ?? 'Productos Terminados' }}</span>
+                            <h5>{{ $producto->nombre }}</h5>
+                            <span class="category-badge">{{ $producto->categoria->nombre ?? 'Sin categoría' }}</span>
                         </div>
                         <div class="stock-indicator">
                             <div class="stock-bar">
-                                <div class="stock-fill" style="width: {{ ($producto->stock_actual ?? 3) / ($producto->stock_minimo ?? 15) * 100 }}%"></div>
+                                @php
+                                    $porcentaje = $producto->stock_minimo > 0 ? ($producto->stock_actual / $producto->stock_minimo * 100) : 0;
+                                    $porcentaje = min($porcentaje, 100); // Máximo 100%
+                                @endphp
+                                <div class="stock-fill" style="width: {{ $porcentaje }}%"></div>
                             </div>
-                            <span class="stock-numbers">{{ $producto->stock_actual ?? 3 }}/{{ $producto->stock_minimo ?? 15 }}</span>
+                            <span class="stock-numbers">{{ $producto->stock_actual }}/{{ $producto->stock_minimo }}</span>
                         </div>
                     </div>
                     @endforeach
@@ -151,15 +155,15 @@
                 <h3><i class="fas fa-exchange-alt"></i> Últimos Movimientos</h3>
             </div>
             <div class="panel-content">
-                @if(isset($ultimosMovimientos) && count($ultimosMovimientos) > 0)
+                @if(isset($ultimosMovimientos) && $ultimosMovimientos->count() > 0)
                     @foreach($ultimosMovimientos as $movimiento)
                     <div class="movement-item">
                         <div class="movement-icon {{ $movimiento->tipo == 'entrada' ? 'entrada' : 'salida' }}">
                             <i class="fas fa-{{ $movimiento->tipo == 'entrada' ? 'arrow-down' : 'arrow-up' }}"></i>
                         </div>
                         <div class="movement-info">
-                            <h5>{{ $movimiento->producto->nombre }}</h5>
-                            <p>{{ $movimiento->tipo == 'entrada' ? 'Entrada' : 'Salida' }} de {{ $movimiento->cantidad }} unidades</p>
+                            <h5>{{ $movimiento->producto->nombre ?? 'Producto' }}</h5>
+                            <p>{{ ucfirst($movimiento->tipo) }} de {{ $movimiento->cantidad }} unidades</p>
                             <span class="movement-date">{{ $movimiento->created_at->format('d/m/Y H:i') }}</span>
                         </div>
                     </div>

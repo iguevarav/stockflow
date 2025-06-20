@@ -960,7 +960,7 @@
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <!-- Brand Logo -->
-            <a href="{{ url('/') }}" class="sidebar-brand">
+            <a href="{{ route('dashboard') }}" class="sidebar-brand">
                 <i class="fas fa-boxes brand-icon"></i>
                 <span class="brand-text">Sistema Inventario</span>
             </a>
@@ -968,30 +968,37 @@
             <!-- Sidebar Navigation -->
             <nav class="sidebar-nav">
                 <div class="nav-item">
-                    <a href="{{ url('/') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('/') || request()->is('dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <span class="nav-text">Dashboard</span>
                     </a>
                 </div>
 
                 <div class="nav-item">
-                    <a href="{{ url('/categorias') }}" class="nav-link {{ request()->is('categorias*') ? 'active' : '' }}">
+                    <a href="{{ route('categorias.index') }}" class="nav-link {{ request()->is('categorias*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tags"></i>
                         <span class="nav-text">Categorías</span>
                     </a>
                 </div>
 
                 <div class="nav-item">
-                    <a href="{{ url('/productos') }}" class="nav-link {{ request()->is('productos*') ? 'active' : '' }}">
+                    <a href="{{ route('productos.index') }}" class="nav-link {{ request()->is('productos*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-box"></i>
                         <span class="nav-text">Productos</span>
                     </a>
                 </div>
 
                 <div class="nav-item">
-                    <a href="{{ url('/movimientos') }}" class="nav-link {{ request()->is('movimientos*') ? 'active' : '' }}">
+                    <a href="{{ route('movimientos.index') }}" class="nav-link {{ request()->is('movimientos*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-exchange-alt"></i>
                         <span class="nav-text">Movimientos</span>
+                    </a>
+                </div>
+
+                <div class="nav-item">
+                    <a href="{{ url('/reportes') }}" class="nav-link {{ request()->is('reportes*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-chart-bar"></i>
+                        <span class="nav-text">Reportes</span>
                     </a>
                 </div>
 
@@ -1010,10 +1017,26 @@
                 </div>
 
                 <div class="navbar-right">
-                    <a href="#" class="user-menu">
-                        <i class="fas fa-user"></i>
-                        <span>Usuario</span>
-                    </a>
+                    <div class="dropdown">
+                        <a href="#" class="user-menu dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user"></i>
+                            <span>{{ Auth::user()->name }}</span>
+                            <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 0.5rem;"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu" aria-labelledby="userDropdown">
+                            <li>
+                                <a class="dropdown-item logout-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Cerrar Sesión
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </div>
             </nav>
 
