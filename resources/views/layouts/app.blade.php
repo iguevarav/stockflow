@@ -962,7 +962,7 @@
             <!-- Brand Logo -->
             <a href="{{ route('dashboard') }}" class="sidebar-brand">
                 <i class="fas fa-boxes brand-icon"></i>
-                <span class="brand-text">Sistema Inventario</span>
+                <span class="brand-text"> STOCKFLOW</span>
             </a>
 
             <!-- Sidebar Navigation -->
@@ -994,14 +994,6 @@
                         <span class="nav-text">Movimientos</span>
                     </a>
                 </div>
-
-                <div class="nav-item">
-                    <a href="{{ url('/reportes') }}" class="nav-link {{ request()->is('reportes*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-chart-bar"></i>
-                        <span class="nav-text">Reportes</span>
-                    </a>
-                </div>
-
                 @yield('sidebar-menu')
             </nav>
         </aside>
