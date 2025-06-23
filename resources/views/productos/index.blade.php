@@ -73,7 +73,7 @@
                                    id="search" 
                                    name="search" 
                                    value="{{ request('search') }}" 
-                                   placeholder="Nombre, código o descripción...">
+                                   placeholder="Nombre, código, descripción o ubicación...">
                         </div>
                     </div>
                     <div class="col-md-3" style="margin-bottom: 16px;">
@@ -157,6 +157,7 @@
                             <tr>
                                 <th>Producto</th>
                                 <th>Categoría</th>
+                                <th>Ubicación</th>
                                 <th>Stock</th>
                                 <th>Precios</th>
                                 <th>Estado</th>
@@ -189,6 +190,16 @@
                                     <span class="badge-inventory badge-category">
                                         {{ $producto->categoria->nombre }}
                                     </span>
+                                </td>
+                                <td>
+                                    @if($producto->ubicacion)
+                                        <div style="display: flex; align-items: center;">
+                                            <i class="fas fa-map-marker-alt" style="color: var(--text-secondary); font-size: 12px; margin-right: 6px;"></i>
+                                            <span style="font-size: 13px; color: var(--text-primary); font-weight: 500;">{{ $producto->ubicacion }}</span>
+                                        </div>
+                                    @else
+                                        <span style="color: var(--text-secondary); font-size: 13px; font-style: italic;">Sin ubicación</span>
+                                    @endif
                                 </td>
                                 <td>
                                     <div class="stock-info">

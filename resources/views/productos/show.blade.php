@@ -57,6 +57,23 @@
                     </div>
                     
                     <div class="product-info-row">
+                        <div class="product-info-label">Ubicación:</div>
+                        <div class="product-info-value">
+                            @if($producto->ubicacion)
+                                <span style="display: flex; align-items: center;">
+                                    <i class="fas fa-map-marker-alt" style="color: var(--primary-blue); margin-right: 8px;"></i>
+                                    <strong>{{ $producto->ubicacion }}</strong>
+                                </span>
+                            @else
+                                <span class="text-muted" style="font-style: italic;">
+                                    <i class="fas fa-map-marker-alt" style="color: var(--text-secondary); margin-right: 8px;"></i>
+                                    Sin ubicación asignada
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    
+                    <div class="product-info-row">
                         <div class="product-info-label">Categoría:</div>
                         <div class="product-info-value">
                             <a href="{{ route('categorias.show', $producto->categoria) }}" class="badge badge-info inventory-badge">

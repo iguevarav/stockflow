@@ -12,13 +12,14 @@ class ProductoController extends Controller
     {
         $query = Producto::with('categoria');
         
-        // Filtros
+        // Filtros existentes
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
                 $q->where('nombre', 'like', "%{$search}%")
                   ->orWhere('codigo', 'like', "%{$search}%")
-                  ->orWhere('descripcion', 'like', "%{$search}%");
+                  ->orWhere('descripcion', 'like', "%{$search}%")
+                  ->orWhere('ubicacion', 'like', "%{$search}%"); // <- AÑADIR ESTA LÍNEA
             });
         }
         
@@ -58,6 +59,7 @@ class ProductoController extends Controller
             'stock_actual' => 'required|integer|min:0',
             'stock_minimo' => 'required|integer|min:0',
             'unidad_medida' => 'required|string|max:50',
+            'ubicacion' => 'nullable|string|max:100', // <- AÑADIR ESTA LÍNEA
             'activo' => 'boolean'
         ]);
 
@@ -94,6 +96,7 @@ class ProductoController extends Controller
             'stock_actual' => 'required|integer|min:0',
             'stock_minimo' => 'required|integer|min:0',
             'unidad_medida' => 'required|string|max:50',
+            'ubicacion' => 'nullable|string|max:100', // <- AÑADIR ESTA LÍNEA
             'activo' => 'boolean'
         ]);
 

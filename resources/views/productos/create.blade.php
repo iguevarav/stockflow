@@ -82,6 +82,20 @@
                         </div>
                         
                         <div class="product-form-group">
+                            <label for="ubicacion">Ubicación en Almacén</label>
+                            <input type="text" 
+                                   class="form-control product-input @error('ubicacion') is-invalid @enderror" 
+                                   id="ubicacion" 
+                                   name="ubicacion" 
+                                   value="{{ old('ubicacion') }}" 
+                                   placeholder="Ej: Estante A-5, Pasillo 2-B, Sección C">
+                            @error('ubicacion')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <small class="form-text">Indica dónde se encuentra físicamente el producto</small>
+                        </div>
+                        
+                        <div class="product-form-group">
                             <label for="descripcion">Descripción</label>
                             <textarea class="form-control product-input @error('descripcion') is-invalid @enderror" 
                                       id="descripcion" 
@@ -271,6 +285,7 @@
                             <li><i class="fas fa-check text-success"></i> Define un stock mínimo realista</li>
                             <li><i class="fas fa-check text-success"></i> Establece precios competitivos</li>
                             <li><i class="fas fa-check text-success"></i> Describe bien el producto</li>
+                            <li><i class="fas fa-check text-success"></i> Especifica la ubicación para facilitar la búsqueda</li>
                         </ul>
                     </div>
                 </div>

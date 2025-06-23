@@ -83,6 +83,20 @@
                         </div>
                         
                         <div class="product-edit-form-group">
+                            <label for="ubicacion">Ubicación en Almacén</label>
+                            <input type="text" 
+                                   class="form-control product-edit-input @error('ubicacion') is-invalid @enderror" 
+                                   id="ubicacion" 
+                                   name="ubicacion" 
+                                   value="{{ old('ubicacion', $producto->ubicacion) }}" 
+                                   placeholder="Ej: Estante A-5, Pasillo 2-B, Sección C">
+                            @error('ubicacion')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <small class="form-text">Indica dónde se encuentra físicamente el producto</small>
+                        </div>
+                        
+                        <div class="product-edit-form-group">
                             <label for="descripcion">Descripción</label>
                             <textarea class="form-control product-edit-input @error('descripcion') is-invalid @enderror" 
                                       id="descripcion" 
