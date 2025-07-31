@@ -9,7 +9,7 @@
 @endsection
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+<link rel="stylesheet" href="{{ asset('css/add.css') }}">
 @endsection
 
 @section('content')
@@ -59,7 +59,7 @@
     <!-- Panel de filtros -->
     <div class="inventory-card">
         <div class="filter-header">
-            <h3 class = "text-md" ><i class="fas fa-filter" style="margin-right: 8px;"></i>Filtros de Búsqueda</h3>
+            <h3 class = "card-title" ><i class="fas fa-filter" style="margin-right: 8px;"></i>Filtros de Búsqueda</h3>
         </div>
         <div style="padding: 24px;">
             <form method="GET" action="{{ route('productos.index') }}">
