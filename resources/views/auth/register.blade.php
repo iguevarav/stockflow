@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Registrarse - Sistema de Inventario</title>
+    <title>Registrarse - SUPCHAIN</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -346,7 +346,7 @@
                 <div class="auth-logo">
                     <i class="fas fa-user-plus"></i>
                 </div>
-                <h1 class="auth-title">Sistema de Inventario</h1>
+                <h1 class="auth-title">SUPCHAIN</h1>
                 <p class="auth-subtitle">Crear Nueva Cuenta</p>
             </div>
 

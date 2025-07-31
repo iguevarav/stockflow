@@ -7,7 +7,6 @@ use App\Models\Venta;
 use App\Models\VentaDetalle;
 use App\Models\Cliente;
 use App\Models\Producto;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class VentaController extends Controller
 {
